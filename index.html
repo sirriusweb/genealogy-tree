@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Генеалогическое древо</title>
+    
+    <!-- Встроенные стили -->
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Georgia, 'Times New Roman', serif; color: #3a2e1f; background: #f5efe0; line-height: 1.4; font-size: 14px; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 20px; }
+
+        /* Шапка */
+        header { background: #fffaf0; padding: 20px 0; text-align: center; border-bottom: 2px solid #d8cbb0; }
+        header h1 { font-size: 28px; color: #4a3a20; margin-bottom: 5px; }
+        .main-tagline { font-size: 18px; color: #4a90d9; margin-bottom: 6px; font-weight: bold; }
+        .sys-req { font-size: 13px; color: #8a7a60; margin-bottom: 0; }
+
+        /* Преимущества */
+        .features { padding: 20px 0; background: #fffaf0; }
+        .grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; }
+        .feature { background: #f5efe0; padding: 15px 12px; border-radius: 10px; border: 1px solid #d8cbb0; text-align: center; box-shadow: 0 3px 8px rgba(0,0,0,0.03); }
+        .feature h3 { color: #4a90d9; margin-bottom: 8px; font-size: 15px; }
+        .feature p { font-size: 13px; color: #5a4a30; line-height: 1.4; }
+
+        /* Скриншоты */
+        .screenshots { padding: 20px 0; }
+        .gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .gallery-img { 
+            width: 100%; 
+            height: 170px; 
+            object-fit: cover; 
+            border-radius: 10px; 
+            border: 2px solid #d8cbb0; 
+            cursor: pointer; 
+            transition: transform 0.2s; 
+        }
+        .gallery-img:hover { transform: scale(1.02); border-color: #4a90d9; }
+
+        /* Блок с ценой */
+        .pricing { padding: 20px 0; background: #fffaf0; }
+        .price-banner { 
+            background: #f5efe0; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            padding: 20px 30px; 
+            border-radius: 10px; 
+            border: 1px solid #d8cbb0; 
+            width: 100%; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .price-option { flex: 1; min-width: 200px; text-align: center; }
+        .price-option h3 { font-size: 19px; color: #4a3a20; margin-bottom: 4px; }
+        .limit { font-size: 14px; color: #6a5a40; }
+        .limit strong { color: #4a90d9; }
+        .valid-until { font-size: 12px; color: #8a7a60; font-style: italic; margin-top: 5px; display: block; }
+
+        .price-action { flex: 1; min-width: 250px; text-align: center; display: flex; flex-direction: column; align-items: center; }
+        .btn-primary { display: inline-block; background: #4a90d9; color: #fff; padding: 12px 30px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 17px; transition: background 0.2s; margin-bottom: 6px; }
+        .btn-primary:hover { background: #357abd; }
+        .warning-text { font-size: 12px; color: #a04040; font-weight: bold; }
+
+        /* Подсказка */
+        .install-hint { 
+            max-width: 1000px; 
+            margin: 15px auto 0; 
+            font-size: 13px; 
+            color: #6a5a40; 
+            text-align: center; 
+            line-height: 1.5; 
+            background: #fff3c4; 
+            padding: 12px; 
+            border-radius: 8px; 
+            border: 1px solid #ffb84d; 
+        }
+        .install-hint a { color: #4a90d9; font-weight: bold; text-decoration: none; }
+        .install-hint a:hover { text-decoration: underline; }
+
+        /* Подвал */
+        footer { background: #3a2e1f; color: #f5efe0; text-align: center; padding: 10px 0; font-size: 13px; }
+        footer a { color: #4a90d9; text-decoration: none; }
+
+        /* Адаптив */
+        @media (max-width: 1200px) {
+            .grid { grid-template-columns: repeat(3, 1fr); }
+        }
+        @media (max-width: 800px) {
+            .price-banner { flex-direction: column; padding: 20px; }
+            .price-action { order: -1; margin-bottom: 20px; }
+        }
+        @media (max-width: 600px) {
+            .grid { grid-template-columns: repeat(2, 1fr); }
+            .gallery { grid-template-columns: 1fr; }
+        }
+
+        /* Лайтбокс */
+        .lightbox { display: none; position: fixed; z-index: 1000; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); justify-content: center; align-items: center; }
+        .lightbox.active { display: flex; }
+        .lightbox img { max-width: 95%; max-height: 90%; border-radius: 8px; }
+        .close-btn { position: absolute; top: 20px; right: 30px; color: #fff; font-size: 40px; cursor: pointer; font-weight: bold; }
+        .close-btn:hover { color: #ccc; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>🌳 Генеалогическое древо</h1>
+            <h2 class="main-tagline">Восстановите и сохраните историю Вашей семьи</h2>
+            <p class="sys-req">Windows 10/11 (64-бит) • Интернет нужен только для активации</p>
+        </div>
+    </header>
+
+    <section class="features">
+        <div class="container">
+            <div class="grid">
+                <div class="feature">
+                    <h3>🔒 Приватность</h3>
+                    <p>Все данные хранятся только на вашем компьютере. Интернет нужен только для получения кода активации.</p>
+                </div>
+                <div class="feature">
+                    <h3>📸 Медиатека</h3>
+                    <p>Добавляйте фото, видео и семейные истории к каждой персоне.</p>
+                </div>
+                <div class="feature">
+                    <h3>🌿 Ветки и группы</h3>
+                    <p>Удобная работа с большими деревьями. Фокусируйтесь на отдельных ветвях.</p>
+                </div>
+                <div class="feature">
+                    <h3>📥 Импорт и экспорт</h3>
+                    <p>Поддержка GEDCOM (GED) для обмена данными и JSON для полного бэкапа.</p>
+                </div>
+                <div class="feature">
+                    <h3>🖼️ Экспорт в SVG</h3>
+                    <p>Моментальный экспорт дерева в картинку SVG. Все файлы сохраняются в папку «Загрузки».</p>
+                </div>
+                <div class="feature">
+                    <h3>💾 Надёжность</h3>
+                    <p>Автоматическое сохранение и история отмены (до 10 шагов).</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="screenshots">
+        <div class="container">
+            <div class="gallery">
+                <img src="img/screen1.jpg" alt="Скриншот 1" class="gallery-img">
+                <img src="img/screen2.jpg" alt="Скриншот 2" class="gallery-img">
+            </div>
+        </div>
+    </section>
+
+    <section class="pricing" id="download">
+        <div class="container">
+            <div class="price-banner">
+                <div class="price-option">
+                    <h3>Пробная версия — 0 ₽</h3>
+                    <p class="limit">Ограничение до <strong>20 персон</strong></p>
+                    <span class="valid-until">Схема оплаты действует до 31.12.2028</span>
+                </div>
+                
+                <div class="price-action">
+                    <!-- Ссылка на скачивание -->
+                    <a href="https://downloader.disk.yandex.ru/disk/45f26340ed7788a4aa21d1de705c0ccb09e65667ac0803825830c561c9ff5046/6aee2716/1zfeuerV91fwZiNsNiil2njtOFtxyOnKjpczAEH4sVdPLYJa-kN9NtNIwPSD743YdCw8guEOhKvlNutB0oGXhQ%3D%3D?uid=0&filename=genealogy-tree_0.1.0_x64-setup.exe&disposition=attachment&hash=IRgyRAabB7lxmBcKpQlAJvCDNA/Cm9TlkLwgpt5KNREepJ6uizF1IhIeUSvUxW6Rq/J6bpmRyOJonT3VoXnDag%3D%3D%3A&limit=0&content_type=application%2Fvnd.microsoft.portable-executable&owner_uid=3809355&fsize=2127047&hid=2206c62d9b28e8caa31e482175bad749&media_type=executable&tknv=v3&is_direct_zip_experiment=1" class="btn-primary" download>Скачать для Windows</a>
+                    <p class="warning-text">⚠️ Только Windows 10/11 (64-бит)</p>
+                </div>
+
+                <div class="price-option">
+                    <h3>Полная версия — 500 ₽</h3>
+                    <p class="limit">Без ограничений</p>
+                    <span class="valid-until">Схема оплаты действует до 31.12.2028</span>
+                </div>
+            </div>
+            
+            <p class="install-hint">
+                💡 <b>Важно:</b> При установке Windows может показать предупреждение «Система Windows защитила ваш компьютер». Это нормально для новых программ. Нажмите <b>«Подробнее»</b> → <b>«Выполнить в любом случае»</b>.<br><br>
+                🛠️ <b>Программа находится в стадии активной разработки.</b> Если у вас есть предложения по улучшению или вы нашли ошибку, пожалуйста, напишите нам на почту: <a href="mailto:weber05@internet.ru">weber05@internet.ru</a>.<br><br>
+                📅 <b>Схема оплаты (500 ₽) действует до 31.12.2028 включительно.</b> После этой даты стоимость и реквизиты могут быть изменены.
+            </p>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Генеалогическое древо. Связь: <a href="mailto:weber05@internet.ru">weber05@internet.ru</a></p>
+        </div>
+    </footer>
+
+    <!-- Полноэкранный просмотр -->
+    <div id="lightbox" class="lightbox">
+        <span class="close-btn">&times;</span>
+        <img id="lightbox-img" src="" alt="Просмотр">
+    </div>
+
+    <!-- Встроенный скрипт для галереи -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const galleryImages = document.querySelectorAll('.gallery-img');
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            const closeBtn = document.querySelector('.close-btn');
+
+            galleryImages.forEach(img => {
+                img.addEventListener('click', () => {
+                    lightboxImg.src = img.src;
+                    lightbox.classList.add('active');
+                });
+            });
+
+            closeBtn.addEventListener('click', () => {
+                lightbox.classList.remove('active');
+            });
+
+            lightbox.addEventListener('click', (e) => {
+                if (e.target === lightbox) {
+                    lightbox.classList.remove('active');
+                }
+            });
+            
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+                    lightbox.classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
