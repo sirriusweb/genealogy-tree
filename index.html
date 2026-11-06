@@ -5,17 +5,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Генеалогическое древо</title>
     
-    <!-- Встроенные стили -->
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: Georgia, 'Times New Roman', serif; color: #3a2e1f; background: #f5efe0; line-height: 1.4; font-size: 14px; }
         .container { max-width: 1400px; margin: 0 auto; padding: 0 20px; }
 
         /* Шапка */
-        header { background: #fffaf0; padding: 20px 0; text-align: center; border-bottom: 2px solid #d8cbb0; }
+        header { background: #fffaf0; padding: 20px 0; text-align: center; border-bottom: 2px solid #d8cbb0; position: relative; }
         header h1 { font-size: 28px; color: #4a3a20; margin-bottom: 5px; }
         .main-tagline { font-size: 18px; color: #4a90d9; margin-bottom: 6px; font-weight: bold; }
         .sys-req { font-size: 13px; color: #8a7a60; margin-bottom: 0; }
+
+        /* Языковой селектор в углу */
+        .lang-switch {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 14px;
+        }
+        .lang-switch select {
+            padding: 6px 8px;
+            border: 1px solid #c8b898;
+            border-radius: 8px;
+            background: #fffaf0;
+            color: #3a2e1f;
+            font-family: inherit;
+            font-size: 13px;
+            cursor: pointer;
+            outline: none;
+        }
 
         /* Преимущества */
         .features { padding: 20px 0; background: #fffaf0; }
@@ -85,17 +106,9 @@
         footer a { color: #4a90d9; text-decoration: none; }
 
         /* Адаптив */
-        @media (max-width: 1200px) {
-            .grid { grid-template-columns: repeat(3, 1fr); }
-        }
-        @media (max-width: 800px) {
-            .price-banner { flex-direction: column; padding: 20px; }
-            .price-action { order: -1; margin-bottom: 20px; }
-        }
-        @media (max-width: 600px) {
-            .grid { grid-template-columns: repeat(2, 1fr); }
-            .gallery { grid-template-columns: 1fr; }
-        }
+        @media (max-width: 1200px) { .grid { grid-template-columns: repeat(3, 1fr); } }
+        @media (max-width: 800px) { .grid { grid-template-columns: repeat(2, 1fr); } .price-banner { flex-direction: column; padding: 20px; } }
+        @media (max-width: 600px) { .grid { grid-template-columns: 1fr; } .gallery { grid-template-columns: 1fr; } }
 
         /* Лайтбокс */
         .lightbox { display: none; position: fixed; z-index: 1000; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); justify-content: center; align-items: center; }
@@ -108,9 +121,25 @@
 <body>
     <header>
         <div class="container">
-            <h1>🌳 Генеалогическое древо</h1>
-            <h2 class="main-tagline">Восстановите и сохраните историю Вашей семьи</h2>
-            <p class="sys-req">Windows 10/11 (64-бит) • Интернет нужен только для активации</p>
+            <!-- Переключатель языка -->
+            <div class="lang-switch">
+                <span>🌐</span>
+                <select id="lang-select">
+                    <option value="ru">Русский</option>
+                    <option value="en">English</option>
+                    <option value="zh">中文</option>
+                    <option value="hi">हिन्दी</option>
+                    <option value="es">Español</option>
+                    <option value="ar">العربية</option>
+                    <option value="fr">Français</option>
+                    <option value="bn">বাংলা</option>
+                    <option value="pt">Português</option>
+                </select>
+            </div>
+
+            <h1 data-i18n="title">🌳 Генеалогическое древо</h1>
+            <h2 class="main-tagline" data-i18n="subtitle">Восстановите и сохраните историю Вашей семьи</h2>
+            <p class="sys-req" data-i18n="sysreq">Windows 10/11 (64-бит) • Интернет нужен только для активации</p>
         </div>
     </header>
 
@@ -118,28 +147,28 @@
         <div class="container">
             <div class="grid">
                 <div class="feature">
-                    <h3>🔒 Приватность</h3>
-                    <p>Все данные хранятся только на вашем компьютере. Интернет нужен только для получения кода активации.</p>
+                    <h3 data-i18n="f1_title">🔒 Приватность</h3>
+                    <p data-i18n="f1_desc">Все данные хранятся только на вашем компьютере. Интернет нужен только для получения кода активации.</p>
                 </div>
                 <div class="feature">
-                    <h3>📸 Медиатека</h3>
-                    <p>Добавляйте фото, видео и семейные истории к каждой персоне.</p>
+                    <h3 data-i18n="f2_title">📸 Медиатека</h3>
+                    <p data-i18n="f2_desc">Добавляйте фото, видео и семейные истории к каждой персоне.</p>
                 </div>
                 <div class="feature">
-                    <h3>🌿 Ветки и группы</h3>
-                    <p>Удобная работа с большими деревьями. Фокусируйтесь на отдельных ветвях.</p>
+                    <h3 data-i18n="f3_title">🌿 Ветки и группы</h3>
+                    <p data-i18n="f3_desc">Удобная работа с большими деревьями. Фокусируйтесь на отдельных ветвях.</p>
                 </div>
                 <div class="feature">
-                    <h3>📥 Импорт и экспорт</h3>
-                    <p>Поддержка GEDCOM (GED) для обмена данными и JSON для полного бэкапа.</p>
+                    <h3 data-i18n="f4_title">📥 Импорт и экспорт</h3>
+                    <p data-i18n="f4_desc">Поддержка GEDCOM (GED) для обмена данными и JSON для полного бэкапа.</p>
                 </div>
                 <div class="feature">
-                    <h3>🖼️ Экспорт в SVG</h3>
-                    <p>Моментальный экспорт дерева в картинку SVG. Все файлы сохраняются в папку «Загрузки».</p>
+                    <h3 data-i18n="f5_title">🖼️ Экспорт в SVG</h3>
+                    <p data-i18n="f5_desc">Моментальный экспорт дерева в картинку SVG. Все файлы сохраняются в папку «Загрузки».</p>
                 </div>
                 <div class="feature">
-                    <h3>💾 Надёжность</h3>
-                    <p>Автоматическое сохранение и история отмены (до 10 шагов).</p>
+                    <h3 data-i18n="f6_title">🌐 9 языков</h3>
+                    <p data-i18n="f6_desc">Интерфейс на русском, английском, китайском и других языках.</p>
                 </div>
             </div>
         </div>
@@ -154,51 +183,256 @@
         </div>
     </section>
 
+    <!-- Блок с ценами -->
     <section class="pricing" id="download">
         <div class="container">
             <div class="price-banner">
                 <div class="price-option">
-                    <h3>Пробная версия — 0 ₽</h3>
-                    <p class="limit">Ограничение до <strong>20 персон</strong></p>
-                    <span class="valid-until">Схема оплаты действует до 31.12.2028</span>
+                    <h3 data-i18n="price_trial_title">Пробная версия — 0 ₽ (RUB)</h3>
+                    <p class="limit" data-i18n="price_trial_limit">Ограничение до 20 персон</p>
+                    <span class="valid-until" data-i18n="valid_until">Схема оплаты действует до 31.12.2028</span>
                 </div>
                 
                 <div class="price-action">
-                    <!-- Ссылка на скачивание -->
-                    <a href="https://downloader.disk.yandex.ru/disk/45f26340ed7788a4aa21d1de705c0ccb09e65667ac0803825830c561c9ff5046/6aee2716/1zfeuerV91fwZiNsNiil2njtOFtxyOnKjpczAEH4sVdPLYJa-kN9NtNIwPSD743YdCw8guEOhKvlNutB0oGXhQ%3D%3D?uid=0&filename=genealogy-tree_0.1.0_x64-setup.exe&disposition=attachment&hash=IRgyRAabB7lxmBcKpQlAJvCDNA/Cm9TlkLwgpt5KNREepJ6uizF1IhIeUSvUxW6Rq/J6bpmRyOJonT3VoXnDag%3D%3D%3A&limit=0&content_type=application%2Fvnd.microsoft.portable-executable&owner_uid=3809355&fsize=2127047&hid=2206c62d9b28e8caa31e482175bad749&media_type=executable&tknv=v3&is_direct_zip_experiment=1" class="btn-primary" download>Скачать для Windows</a>
-                    <p class="warning-text">⚠️ Только Windows 10/11 (64-бит)</p>
+                    <a href="https://github.com/sirriusweb/genealogy-tree/releases/download/v0.1.0/genealogy-tree_0.1.0_x64-setup.exe" class="btn-primary" download data-i18n="download_btn">Скачать для Windows</a>
+                    <p class="warning-text" data-i18n="download_warn">⚠️ Только Windows 10/11 (64-бит)</p>
                 </div>
 
                 <div class="price-option">
-                    <h3>Полная версия — 500 ₽</h3>
-                    <p class="limit">Без ограничений</p>
-                    <span class="valid-until">Схема оплаты действует до 31.12.2028</span>
+                    <h3 data-i18n="price_full_title">Полная версия — 500 ₽ (RUB)</h3>
+                    <p class="limit" data-i18n="price_full_limit">Без ограничений</p>
+                    <span class="valid-until" data-i18n="valid_until">Схема оплаты действует до 31.12.2028</span>
                 </div>
             </div>
             
             <p class="install-hint">
-                💡 <b>Важно:</b> При установке Windows может показать предупреждение «Система Windows защитила ваш компьютер». Это нормально для новых программ. Нажмите <b>«Подробнее»</b> → <b>«Выполнить в любом случае»</b>.<br><br>
-                🛠️ <b>Программа находится в стадии активной разработки.</b> Если у вас есть предложения по улучшению или вы нашли ошибку, пожалуйста, напишите нам на почту: <a href="mailto:weber05@internet.ru">weber05@internet.ru</a>.<br><br>
-                📅 <b>Схема оплаты (500 ₽) действует до 31.12.2028 включительно.</b> После этой даты стоимость и реквизиты могут быть изменены.
+                <span data-i18n="hint1">💡 Важно: При установке Windows может показать предупреждение «Система Windows защитила ваш компьютер». Это нормально для новых программ. Нажмите «Подробнее» → «Выполнить в любом случае».</span><br><br>
+                <span data-i18n="hint2">🛠️ Программа находится в стадии активной разработки. Предложения и ошибки присылайте на почту: weber05@internet.ru</span><br><br>
+                <span data-i18n="hint3">📅 Схема оплаты (500 российских рублей) действует до 31.12.2028 включительно.</span>
             </p>
         </div>
     </section>
 
     <footer>
         <div class="container">
-            <p>&copy; 2026 Генеалогическое древо. Связь: <a href="mailto:weber05@internet.ru">weber05@internet.ru</a></p>
+            <p data-i18n="footer">&copy; 2026 Генеалогическое древо. Связь: weber05@internet.ru</p>
         </div>
     </footer>
 
-    <!-- Полноэкранный просмотр -->
     <div id="lightbox" class="lightbox">
         <span class="close-btn">&times;</span>
         <img id="lightbox-img" src="" alt="Просмотр">
     </div>
 
-    <!-- Встроенный скрипт для галереи -->
     <script>
+        // Словарь переводов (9 языков)
+        const LANDING_I18N = {
+            ru: {
+                title: "🌳 Генеалогическое древо",
+                subtitle: "Восстановите и сохраните историю Вашей семьи",
+                sysreq: "Windows 10/11 (64-бит) • Интернет нужен только для активации",
+                f1_title: "🔒 Приватность", f1_desc: "Все данные хранятся только на вашем компьютере. Интернет нужен только для получения кода активации.",
+                f2_title: "📸 Медиатека", f2_desc: "Добавляйте фото, видео и семейные истории к каждой персоне.",
+                f3_title: "🌿 Ветки и группы", f3_desc: "Удобная работа с большими деревьями. Фокусируйтесь на отдельных ветвях.",
+                f4_title: "📥 Импорт и экспорт", f4_desc: "Поддержка GEDCOM (GED) для обмена данными и JSON для полного бэкапа.",
+                f5_title: "🖼️ Экспорт в SVG", f5_desc: "Моментальный экспорт дерева в картинку SVG. Все файлы сохраняются в папку «Загрузки».",
+                f6_title: "🌐 9 языков", f6_desc: "Интерфейс на русском, английском, китайском и других языках.",
+                price_trial_title: "Пробная версия — 0 ₽ (RUB)", price_trial_limit: "Ограничение до 20 персон",
+                price_full_title: "Полная версия — 500 ₽ (RUB)", price_full_limit: "Без ограничений",
+                valid_until: "Схема оплаты действует до 31.12.2028",
+                download_btn: "Скачать для Windows", download_warn: "⚠️ Только Windows 10/11 (64-бит)",
+                hint1: "💡 Важно: При установке Windows может показать предупреждение «Система Windows защитила ваш компьютер». Это нормально для новых программ. Нажмите «Подробнее» → «Выполнить в любом случае».",
+                hint2: "🛠️ Программа находится в стадии активной разработки. Предложения и ошибки присылайте на почту: weber05@internet.ru",
+                hint3: "📅 Схема оплаты (500 российских рублей) действует до 31.12.2028 включительно.",
+                footer: "© 2026 Генеалогическое древо. Связь: weber05@internet.ru"
+            },
+            en: {
+                title: "🌳 Family Tree",
+                subtitle: "Restore and preserve your family history",
+                sysreq: "Windows 10/11 (64-bit) • Internet needed only for activation",
+                f1_title: "🔒 Privacy", f1_desc: "All data is stored only on your computer. Internet is needed only to receive the activation code.",
+                f2_title: "📸 Media Library", f2_desc: "Add photos, videos and family stories to each person.",
+                f3_title: "🌿 Branches & Groups", f3_desc: "Easy work with large trees. Focus on individual branches.",
+                f4_title: "📥 Import & Export", f4_desc: "GEDCOM (GED) support for data exchange and JSON for full backup.",
+                f5_title: "🖼️ SVG Export", f5_desc: "Instant export of the tree to an SVG image. All files are saved to the 'Downloads' folder.",
+                f6_title: "🌐 9 Languages", f6_desc: "Interface in Russian, English, Chinese and other languages.",
+                price_trial_title: "Trial version — 0 ₽ (RUB)", price_trial_limit: "Limit up to 20 persons",
+                price_full_title: "Full version — 500 ₽ (RUB)", price_full_limit: "No restrictions",
+                valid_until: "Payment scheme valid until 31.12.2028",
+                download_btn: "Download for Windows", download_warn: "⚠️ Windows 10/11 (64-bit) only",
+                hint1: "💡 Important: During installation, Windows may show a warning 'Windows protected your PC'. This is normal for new programs. Click 'More info' → 'Run anyway'.",
+                hint2: "🛠️ The program is under active development. Send suggestions and bugs to: weber05@internet.ru",
+                hint3: "📅 The payment scheme (500 Russian rubles) is valid until 31.12.2028 inclusive.",
+                footer: "© 2026 Family Tree. Contact: weber05@internet.ru"
+            },
+            zh: {
+                title: "🌳 家谱",
+                subtitle: "恢复并保存您的家族历史",
+                sysreq: "Windows 10/11 (64位) • 仅在激活时需要联网",
+                f1_title: "🔒 隐私", f1_desc: "所有数据仅存储在您的计算机上。仅在获取激活码时需要联网。",
+                f2_title: "📸 媒体库", f2_desc: "为每个人添加照片、视频和家族故事。",
+                f3_title: "🌿 分支和组", f3_desc: "轻松处理大型家谱。专注于单独的分支。",
+                f4_title: "📥 导入和导出", f4_desc: "支持 GEDCOM (GED) 数据交换和 JSON 完整备份。",
+                f5_title: "🖼️ 导出为 SVG", f5_desc: "即时将家谱导出为 SVG 图像。所有文件保存到“下载”文件夹。",
+                f6_title: "🌐 9 种语言", f6_desc: "界面支持俄语、英语、中文等多种语言。",
+                price_trial_title: "试用版 — 0 ₽ (RUB)", price_trial_limit: "最多 20 人",
+                price_full_title: "完整版 — 500 ₽ (RUB)", price_full_limit: "无限制",
+                valid_until: "支付方案有效期至 2028 年 12 月 31 日",
+                download_btn: "下载 Windows 版", download_warn: "⚠️ 仅限 Windows 10/11 (64位)",
+                hint1: "💡 重要提示：安装时 Windows 可能会显示“Windows 已保护你的电脑”警告。这对新程序是正常的。请点击“更多信息” → “仍要运行”。",
+                hint2: "🛠️ 程序正在积极开发中。请将建议和错误发送至：weber05@internet.ru",
+                hint3: "📅 支付方案（500 俄罗斯卢布）有效期至 2028 年 12 月 31 日。",
+                footer: "© 2026 家谱。联系方式：weber05@internet.ru"
+            },
+            hi: {
+                title: "🌳 वंशावली",
+                subtitle: "अपने परिवार का इतिहास पुनर्स्थापित करें और सुरक्षित रखें",
+                sysreq: "Windows 10/11 (64-बिट) • इंटरनेट की आवश्यकता केवल सक्रियण के लिए है",
+                f1_title: "🔒 गोपनीयता", f1_desc: "सभी डेटा केवल आपके कंप्यूटर पर संग्रहीत होता है। इंटरनेट की आवश्यकता केवल सक्रियण कोड प्राप्त करने के लिए है।",
+                f2_title: "📸 मीडिया लाइब्रेरी", f2_desc: "प्रत्येक व्यक्ति के लिए फ़ोटो, वीडियो और पारिवारिक कहानियाँ जोड़ें।",
+                f3_title: "🌿 शाखाएँ और समूह", f3_desc: "बड़े पेड़ों के साथ आसान काम। व्यक्तिगत शाखाओं पर ध्यान केंद्रित करें।",
+                f4_title: "📥 आयात और निर्यात", f4_desc: "डेटा विनिमय के लिए GEDCOM (GED) समर्थन और पूर्ण बैकअप के लिए JSON।",
+                f5_title: "🖼️ SVG निर्यात", f5_desc: "पेड़ को SVG छवि में तुरंत निर्यात करें। सभी फ़ाइलें 'डाउनलोड' फ़ोल्डर में सहेजी जाती हैं।",
+                f6_title: "🌐 9 भाषाएँ", f6_desc: "रूसी, अंग्रेजी, चीनी और अन्य भाषाओं में इंटरफ़ेस।",
+                price_trial_title: "परीक्षण संस्करण — 0 ₽ (RUB)", price_trial_limit: "20 व्यक्तियों तक सीमा",
+                price_full_title: "पूर्ण संस्करण — 500 ₽ (RUB)", price_full_limit: "कोई प्रतिबंध नहीं",
+                valid_until: "भुगतान योजना 31.12.2028 तक मान्य है",
+                download_btn: "Windows के लिए डाउनलोड करें", download_warn: "⚠️ केवल Windows 10/11 (64-बिट)",
+                hint1: "💡 महत्वपूर्ण: स्थापना के दौरान, Windows 'Windows ने आपके PC की सुरक्षा की' चेतावनी दिखा सकता है। यह नए प्रोग्राम के लिए सामान्य है। 'अधिक जानकारी' → 'फिर भी चलाएं' पर क्लिक करें।",
+                hint2: "🛠️ प्रोग्राम सक्रिय विकास में है। सुझाव और बग भेजें: weber05@internet.ru",
+                hint3: "📅 भुगतान योजना (500 रूसी रूबल) 31.12.2028 तक मान्य है।",
+                footer: "© 2026 वंशावली। संपर्क: weber05@internet.ru"
+            },
+            es: {
+                title: "🌳 Árbol genealógico",
+                subtitle: "Restaure y preserve la historia de su familia",
+                sysreq: "Windows 10/11 (64 bits) • Internet solo para activación",
+                f1_title: "🔒 Privacidad", f1_desc: "Todos los datos se almacenan solo en su computadora. Internet solo es necesario para recibir el código de activación.",
+                f2_title: "📸 Biblioteca multimedia", f2_desc: "Agregue fotos, videos e historias familiares a cada persona.",
+                f3_title: "🌿 Ramas y grupos", f3_desc: "Fácil trabajo con árboles grandes. Céntrese en ramas individuales.",
+                f4_title: "📥 Importar y exportar", f4_desc: "Soporte GEDCOM (GED) para intercambio de datos y JSON para copia de seguridad completa.",
+                f5_title: "🖼️ Exportar a SVG", f5_desc: "Exportación instantánea del árbol a una imagen SVG. Todos los archivos se guardan en la carpeta 'Descargas'.",
+                f6_title: "🌐 9 idiomas", f6_desc: "Interfaz en ruso, inglés, chino y otros idiomas.",
+                price_trial_title: "Versión de prueba — 0 ₽ (RUB)", price_trial_limit: "Límite hasta 20 personas",
+                price_full_title: "Versión completa — 500 ₽ (RUB)", price_full_limit: "Sin restricciones",
+                valid_until: "Esquema de pago válido hasta 31.12.2028",
+                download_btn: "Descargar para Windows", download_warn: "⚠️ Solo Windows 10/11 (64 bits)",
+                hint1: "💡 Importante: Durante la instalación, Windows puede mostrar una advertencia 'Windows protegió su PC'. Esto es normal para programas nuevos. Haga clic en 'Más información' → 'Ejecutar de todos modos'.",
+                hint2: "🛠️ El programa está en desarrollo activo. Envíe sugerencias y errores a: weber05@internet.ru",
+                hint3: "📅 El esquema de pago (500 rublos rusos) es válido hasta el 31.12.2028 inclusive.",
+                footer: "© 2026 Árbol genealógico. Contacto: weber05@internet.ru"
+            },
+            ar: {
+                title: "🌳 شجرة العائلة",
+                subtitle: "استعد واحفظ تاريخ عائلتك",
+                sysreq: "Windows 10/11 (64 بت) • الإنترنت مطلوب فقط للتنشيط",
+                f1_title: "🔒 الخصوصية", f1_desc: "يتم تخزين جميع البيانات على جهاز الكمبيوتر الخاص بك فقط. الإنترنت مطلوب فقط لتلقي رمز التنشيط.",
+                f2_title: "📸 مكتبة الوسائط", f2_desc: "أضف الصور ومقاطع الفيديو وقصص العائلة لكل شخص.",
+                f3_title: "🌿 الفروع والمجموعات", f3_desc: "عمل سهل مع الأشجار الكبيرة. ركز على الفروع الفردية.",
+                f4_title: "📥 استيراد وتصدير", f4_desc: "دعم GEDCOM (GED) لتبادل البيانات و JSON لنسخ احتياطي كامل.",
+                f5_title: "🖼️ تصدير إلى SVG", f5_desc: "تصدير فوري للشجرة إلى صورة SVG. يتم حفظ جميع الملفات في مجلد 'التنزيلات'.",
+                f6_title: "🌐 9 لغات", f6_desc: "واجهة باللغة الروسية والإنجليزية والصينية ولغات أخرى.",
+                price_trial_title: "نسخة تجريبية — 0 ₽ (RUB)", price_trial_limit: "الحد الأقصى 20 شخصًا",
+                price_full_title: "النسخة الكاملة — 500 ₽ (RUB)", price_full_limit: "بدون قيود",
+                valid_until: "مخطط الدفع صالح حتى 31.12.2028",
+                download_btn: "تحميل لنظام Windows", download_warn: "⚠️ فقط Windows 10/11 (64 بت)",
+                hint1: "💡 هام: أثناء التثبيت، قد يعرض Windows تحذير 'قام Windows بحماية الكمبيوتر'. هذا طبيعي للبرامج الجديدة. انقر على 'مزيد من المعلومات' ← 'تشغيل على أي حال'.",
+                hint2: "🛠️ البرنامج قيد التطوير النشط. أرسل الاقتراحات والأخطاء إلى: weber05@internet.ru",
+                hint3: "📅 مخطط الدفع (500 روبل روسي) صالح حتى 31.12.2028 ضمناً.",
+                footer: "© 2026 شجرة العائلة. الاتصال: weber05@internet.ru"
+            },
+            fr: {
+                title: "🌳 Arbre généalogique",
+                subtitle: "Restaurez et préservez l'histoire de votre famille",
+                sysreq: "Windows 10/11 (64 bits) • Internet uniquement pour l'activation",
+                f1_title: "🔒 Confidentialité", f1_desc: "Toutes les données sont stockées uniquement sur votre ordinateur. Internet n'est nécessaire que pour recevoir le code d'activation.",
+                f2_title: "📸 Médiathèque", f2_desc: "Ajoutez des photos, des vidéos et des histoires de famille à chaque personne.",
+                f3_title: "🌿 Branches et groupes", f3_desc: "Travail facile avec de grands arbres. Concentrez-vous sur des branches individuelles.",
+                f4_title: "📥 Importer et exporter", f4_desc: "Prise en charge GEDCOM (GED) pour l'échange de données et JSON pour une sauvegarde complète.",
+                f5_title: "🖼️ Exportation SVG", f5_desc: "Exportation instantanée de l'arbre vers une image SVG. Tous les fichiers sont enregistrés dans le dossier 'Téléchargements'.",
+                f6_title: "🌐 9 langues", f6_desc: "Interface en russe, anglais, chinois et autres langues.",
+                price_trial_title: "Version d'essai — 0 ₽ (RUB)", price_trial_limit: "Limite à 20 personnes",
+                price_full_title: "Version complète — 500 ₽ (RUB)", price_full_limit: "Sans restrictions",
+                valid_until: "Schéma de paiement valable jusqu'au 31.12.2028",
+                download_btn: "Télécharger pour Windows", download_warn: "⚠️ Windows 10/11 (64 bits) uniquement",
+                hint1: "💡 Important : Lors de l'installation, Windows peut afficher un avertissement 'Windows a protégé votre PC'. C'est normal pour les nouveaux programmes. Cliquez sur 'Plus d'infos' → 'Exécuter quand même'.",
+                hint2: "🛠️ Le programme est en développement actif. Envoyez suggestions et bugs à : weber05@internet.ru",
+                hint3: "📅 Le schéma de paiement (500 roubles russes) est valable jusqu'au 31.12.2028 inclus.",
+                footer: "© 2026 Arbre généalogique. Contact : weber05@internet.ru"
+            },
+            bn: {
+                title: "🌳 বংশতালিকা",
+                subtitle: "আপনার পরিবারের ইতিহাস পুনরুদ্ধার এবং সংরক্ষণ করুন",
+                sysreq: "Windows 10/11 (64-বিট) • ইন্টারনেট শুধুমাত্র সক্রিয়করণের জন্য প্রয়োজন",
+                f1_title: "🔒 গোপনীয়তা", f1_desc: "সমস্ত ডেটা শুধুমাত্র আপনার কম্পিউটারে সংরক্ষিত থাকে। অ্যাক্টিভেশন কোড পেতে ইন্টারনেট শুধুমাত্র প্রয়োজন।",
+                f2_title: "📸 মিডিয়া লাইব্রেরি", f2_desc: "প্রতিটি ব্যক্তির জন্য ফটো, ভিডিও এবং পারিবারিক গল্প যোগ করুন।",
+                f3_title: "🌿 শাখা এবং গ্রুপ", f3_desc: "বড় গাছের সাথে সহজ কাজ। পৃথক শাখায় ফোকাস করুন।",
+                f4_title: "📥 আমদানি এবং রপ্তানি", f4_desc: "ডেটা বিনিময়ের জন্য GEDCOM (GED) সমর্থন এবং সম্পূর্ণ ব্যাকআপের জন্য JSON।",
+                f5_title: "🖼️ SVG রপ্তানি", f5_desc: "গাছটি তাৎক্ষণিকভাবে SVG ছবিতে রপ্তানি করুন। সমস্ত ফাইল 'ডাউনলোড' ফোল্ডারে সংরক্ষিত হয়।",
+                f6_title: "🌐 9টি ভাষা", f6_desc: "রাশিয়ান, ইংরেজি, চীনা এবং অন্যান্য ভাষায় ইন্টারফেস।",
+                price_trial_title: "ট্রায়াল সংস্করণ — 0 ₽ (RUB)", price_trial_limit: "20 জন পর্যন্ত সীমা",
+                price_full_title: "সম্পূর্ণ সংস্করণ — 500 ₽ (RUB)", price_full_limit: "কোনো সীমাবদ্ধতা নেই",
+                valid_until: "পেমেন্ট স্কিম 31.12.2028 পর্যন্ত বৈধ",
+                download_btn: "Windows এর জন্য ডাউনলোড করুন", download_warn: "⚠️ শুধুমাত্র Windows 10/11 (64-বিট)",
+                hint1: "💡 গুরুত্বপূর্ণ: ইনস্টলেশনের সময়, Windows 'Windows আপনার পিসি সুরক্ষিত করেছে' সতর্কতা দেখাতে পারে। এটি নতুন প্রোগ্রামের জন্য স্বাভাবিক। 'আরও তথ্য' → 'যেকোনোভাবেই চালান' এ ক্লিক করুন।",
+                hint2: "🛠️ প্রোগ্রামটি সক্রিয় বিকাশে রয়েছে। পরামর্শ এবং বাগ পাঠান: weber05@internet.ru",
+                hint3: "📅 পেমেন্ট স্কিম (500 রাশিয়ান রুবেল) 31.12.2028 পর্যন্ত বৈধ।",
+                footer: "© 2026 বংশতালিকা। যোগাযোগ: weber05@internet.ru"
+            },
+            pt: {
+                title: "🌳 Árvore genealógica",
+                subtitle: "Restaure e preserve a história da sua família",
+                sysreq: "Windows 10/11 (64 bits) • Internet apenas para ativação",
+                f1_title: "🔒 Privacidade", f1_desc: "Todos os dados são armazenados apenas no seu computador. A internet é necessária apenas para receber o código de ativação.",
+                f2_title: "📸 Biblioteca de mídia", f2_desc: "Adicione fotos, vídeos e histórias de família a cada pessoa.",
+                f3_title: "🌿 Ramos e grupos", f3_desc: "Trabalho fácil com árvores grandes. Foque em ramos individuais.",
+                f4_title: "📥 Importar e exportar", f4_desc: "Suporte GEDCOM (GED) para troca de dados e JSON para backup completo.",
+                f5_title: "🖼️ Exportar para SVG", f5_desc: "Exportação instantânea da árvore para uma imagem SVG. Todos os arquivos são salvos na pasta 'Downloads'.",
+                f6_title: "🌐 9 idiomas", f6_desc: "Interface em russo, inglês, chinês e outros idiomas.",
+                price_trial_title: "Versão de teste — 0 ₽ (RUB)", price_trial_limit: "Limite de até 20 pessoas",
+                price_full_title: "Versão completa — 500 ₽ (RUB)", price_full_limit: "Sem restrições",
+                valid_until: "Esquema de pagamento válido até 31.12.2028",
+                download_btn: "Baixar para Windows", download_warn: "⚠️ Apenas Windows 10/11 (64 bits)",
+                hint1: "💡 Importante: Durante a instalação, o Windows pode mostrar um aviso 'O Windows protegeu o seu PC'. Isso é normal para novos programas. Clique em 'Mais informações' → 'Executar mesmo assim'.",
+                hint2: "🛠️ O programa está em desenvolvimento ativo. Envie sugestões e bugs para: weber05@internet.ru",
+                hint3: "📅 O esquema de pagamento (500 rublos russos) é válido até 31.12.2028 inclusive.",
+                footer: "© 2026 Árvore genealógica. Contato: weber05@internet.ru"
+            }
+        };
+
+        // Функция применения языка
+        function applyLandingLang(lang) {
+            const dict = LANDING_I18N[lang] || LANDING_I18N['en'];
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (dict[key]) {
+                    if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                        el.value = dict[key];
+                    } else {
+                        el.textContent = dict[key];
+                    }
+                }
+            });
+            document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
+        }
+
+        // Инициализация при загрузке
         document.addEventListener('DOMContentLoaded', () => {
+            const sel = document.getElementById('lang-select');
+            const savedLang = localStorage.getItem('landingLang') || 'ru';
+            
+            if (sel) {
+                sel.value = savedLang;
+                applyLandingLang(savedLang);
+                
+                sel.addEventListener('change', (e) => {
+                    const newLang = e.target.value;
+                    localStorage.setItem('landingLang', newLang);
+                    applyLandingLang(newLang);
+                });
+            }
+
+            // Логика лайтбокса
             const galleryImages = document.querySelectorAll('.gallery-img');
             const lightbox = document.getElementById('lightbox');
             const lightboxImg = document.getElementById('lightbox-img');
@@ -211,21 +445,9 @@
                 });
             });
 
-            closeBtn.addEventListener('click', () => {
-                lightbox.classList.remove('active');
-            });
-
-            lightbox.addEventListener('click', (e) => {
-                if (e.target === lightbox) {
-                    lightbox.classList.remove('active');
-                }
-            });
-            
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape' && lightbox.classList.contains('active')) {
-                    lightbox.classList.remove('active');
-                }
-            });
+            closeBtn.addEventListener('click', () => lightbox.classList.remove('active'));
+            lightbox.addEventListener('click', (e) => { if (e.target === lightbox) lightbox.classList.remove('active'); });
+            document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && lightbox.classList.contains('active')) lightbox.classList.remove('active'); });
         });
     </script>
 </body>
