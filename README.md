@@ -13,6 +13,23 @@
 
 ---
 
+### 🖥️ Посмотреть / Preview
+
+Хотите узнать больше или скачать программу? Переходите на наш официальный сайт:
+
+| 🇷🇺 **Русский** | 🇬🇧 **English** |
+| :--- | :--- |
+| 👉 **[Открыть сайт проекта](https://sirriusweb.github.io/genealogy-tree/)** | 👉 **[Visit official website](https://sirriusweb.github.io/genealogy-tree/)** |
+
+<br>
+
+<p align="center">
+  <img src="https://sirriusweb.github.io/genealogy-tree/img/screen1.jpg" width="45%" style="border-radius: 8px; border: 1px solid #d8cbb0; margin-right: 10px;" />
+  <img src="https://sirriusweb.github.io/genealogy-tree/img/screen2.jpg" width="45%" style="border-radius: 8px; border: 1px solid #d8cbb0;" />
+</p>
+
+---
+
 ### 💳 Лицензия и стоимость | License & Pricing
 
 | 🇷🇺 **Русский** | 🇬🇧 **English** |
